@@ -1,0 +1,54 @@
+[user]
+    name = Jonathan Hitchcock
+    email = jonathan.hitchcock@gmail.com
+
+[github]
+    user = vhata
+
+[color]
+    ui = auto
+    status = auto
+    diff = auto
+
+[color "branch"]
+    current = red
+    local = green
+    remote = blue
+
+[diff]
+    renames = true
+
+[push]
+    default = current
+
+[alias]
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    dw = diff --color-words
+    promote = !~/bin/git-promote
+    wtf     = !~/bin/git-wtf
+    rank-contributers = !~/bin/git-rank-contributers
+    stats   = shortlog -sn
+    df = !git diff $1^
+    undo = reset --soft HEAD^
+    amend = commit --amend -C HEAD
+    credit = commit --amend --author "$1 <$2>" -C HEAD
+    delete-local-merged = !git branch -d `git branch --merged | grep -v '^*' | grep -v 'master' | tr -d '\n'`
+    l = log --graph --color --decorate=short
+    lr = log --color --decorate=short --reverse --patch --first-parent
+    ll = log --date=short --pretty='format:%h %an %cd %s' --graph --color HEAD~10..
+    assume   = update-index --assume-unchanged
+    unassume = update-index --no-assume-unchanged
+    assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
+	status = status --ignore-submodules=dirty
+
+[url "ssh://git@github.com/"]
+    insteadOf = gh:
+
+[help]
+    autocorrect = 20
+
+[pull]
+	rebase = true
+
+[include]
+    path = ~/.gitconfig-local
