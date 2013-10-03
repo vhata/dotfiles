@@ -14,8 +14,8 @@ export MANPATH="${manpathadds[*]}:$MANPATH"
 IFS="$OLD_IFS"
 
 # These should use `brew --prefix` but I prefer a fast shell
-if [ -f /usr/local/share/bash-completion/bash_completion ];then
-    . /usr/local/share/bash-completion/bash_completion
+if [ -f /usr/local/etc/bash_completion ];then
+    . /usr/local/etc/bash_completion
 fi
 
 export RED=$'\E[01;31m'
@@ -94,3 +94,4 @@ if [ -f "$LOCALBASHRC" ] ; then
     . "$LOCALBASHRC"
 fi
 
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
