@@ -3,13 +3,13 @@ alias psx='/bin/ps -wwwaxo pid,ppid,ruser,nice,start,time,pcpu,pmem,rss,command'
 alias ls='ls -G'
 alias ql='qlmanage -p 2>/dev/null'
 alias top='top -F -R -o cpu'
-alias newchrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=$HOME/Library/Application\ Support/Google/OtherChrome'
+alias newchrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=$HOME/Library/Application\ Support/Google/OtherChrome"
 alias pjson='python -mjson.tool | pygmentize -l javascript'
 alias head='ghead'
 #alias git=hub
 alias pb=pythonbrew
-alias tac='python -c '\''import sys; print "".join(reversed(list(sys.stdin))),'\'''
-timestamp() { perl -e "print localtime($1).\"\n\"" ; }
+#alias tac='python -c '\''import sys; print "".join(reversed(list(sys.stdin))),'\'''
+#timestamp() { perl -e "print localtime($1).\"\n\"" ; }
 alias where="python -c \"import sys; print ','.join([repr(l.strip()) for l in sys.stdin])\""
 alias glances=~/.pythonbrew/venvs/Python-2.6.5/useful/bin/glances
 alias oneline='paste -d" " -s -'
