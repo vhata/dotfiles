@@ -9,6 +9,13 @@ RED='\033[0;31m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
+# Check if we have sudo access at the beginning
+if ! sudo -n true 2>/dev/null; then
+    echo -e "${RED}This script requires sudo access to run properly.${NC}"
+    echo -e "${YELLOW}Please run 'sudo -v' first to authenticate, then run this script again.${NC}"
+    exit 1
+fi
+
 echo -e "${BLUE}============================================${NC}"
 echo -e "${BLUE}       Setting up your MacBook...          ${NC}"
 echo -e "${BLUE}============================================${NC}"
