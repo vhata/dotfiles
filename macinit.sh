@@ -17,7 +17,8 @@ echo -e "${BLUE}============================================${NC}"
 current_shell=$(echo $SHELL)
 if [[ "$current_shell" != *"/bash"* ]]; then
     echo -e "${YELLOW}Current shell: ${current_shell}${NC}"
-    read -p "$(echo -e ${CYAN}Would you like to change it to bash? [y/n]: ${NC})" change_shell
+    read -p "$(echo -e ${CYAN}Would you like to change it to bash? [Y/n]: ${NC})" change_shell
+    change_shell=${change_shell:-Y}  # Default to Y if no input
     if [[ $change_shell =~ ^[Yy]$ ]]; then
         echo -e "${GREEN}Changing default shell to bash...${NC}"
         
@@ -41,7 +42,8 @@ fi
 # Check if Homebrew is already installed
 if ! command -v brew &> /dev/null; then
     echo -e "${YELLOW}Homebrew is not installed.${NC}"
-    read -p "$(echo -e ${CYAN}Would you like to install it? [y/n]: ${NC})" install_brew
+    read -p "$(echo -e ${CYAN}Would you like to install it? [Y/n]: ${NC})" install_brew
+    install_brew=${install_brew:-Y}  # Default to Y if no input
     if [[ $install_brew =~ ^[Yy]$ ]]; then
         echo -e "${GREEN}Installing Homebrew...${NC}"
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -56,7 +58,8 @@ if ! command -v brew &> /dev/null; then
     fi
 else
     echo -e "${YELLOW}Homebrew is already installed.${NC}"
-    read -p "$(echo -e ${CYAN}Would you like to update it? [y/n]: ${NC})" update_brew
+    read -p "$(echo -e ${CYAN}Would you like to update it? [Y/n]: ${NC})" update_brew
+    update_brew=${update_brew:-Y}  # Default to Y if no input
     if [[ $update_brew =~ ^[Yy]$ ]]; then
         echo -e "${GREEN}Updating Homebrew...${NC}"
         brew update
@@ -67,7 +70,8 @@ else
 fi
 
 # Optional: Run brew doctor
-read -p "$(echo -e ${CYAN}Would you like to run brew doctor to check for issues? [y/n]: ${NC})" run_doctor
+read -p "$(echo -e ${CYAN}Would you like to run brew doctor to check for issues? [Y/n]: ${NC})" run_doctor
+run_doctor=${run_doctor:-Y}  # Default to Y if no input
 if [[ $run_doctor =~ ^[Yy]$ ]]; then
     echo -e "${GREEN}Running brew doctor...${NC}"
     brew doctor
