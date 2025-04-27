@@ -13,12 +13,11 @@ echo -e "${BLUE}============================================${NC}"
 echo -e "${BLUE}       Setting up your MacBook...          ${NC}"
 echo -e "${BLUE}============================================${NC}"
 
-# Change default shell to bash if it's not already
 current_shell=$(echo $SHELL)
 if [[ "$current_shell" != *"/bash"* ]]; then
     echo -e "${YELLOW}Current shell: ${current_shell}${NC}"
     read -p "$(echo -e ${CYAN}Would you like to change it to bash? [Y/n]: ${NC})" change_shell
-    change_shell=${change_shell:-Y}  # Default to Y if no input
+    change_shell=${change_shell:-Y}
     if [[ $change_shell =~ ^[Yy]$ ]]; then
         echo -e "${GREEN}Changing default shell to bash...${NC}"
         
@@ -27,10 +26,7 @@ if [[ "$current_shell" != *"/bash"* ]]; then
             echo -e "${YELLOW}Adding bash to allowed shells...${NC}"
             echo "/bin/bash" | sudo tee -a /etc/shells
         fi
-        
-        # Change the default shell to bash
         chsh -s /bin/bash
-        
         echo -e "${GREEN}Default shell changed to bash. You'll need to restart your terminal for changes to take effect.${NC}"
     else
         echo -e "${YELLOW}Keeping current shell (${current_shell}).${NC}"
@@ -39,7 +35,24 @@ else
     echo -e "${GREEN}Bash is already your default shell.${NC}"
 fi
 
-# Check if Homebrew is already installed
+# Enable Touch ID for sudo
+echo -e "${YELLOW}Checking if Touch ID is enabled for sudo...${NC}"
+if ! grep -q "pam_tid.so" /etc/pam.d/sudo; then
+    read -p "$(echo -e ${CYAN}Would you like to enable Touch ID for sudo authentication? [Y/n]: ${NC})" enable_touchid
+    enable_touchid=${enable_touchid:-Y}  # Default to Y if no input
+    if [[ $enable_touchid =~ ^[Yy]$ ]]; then
+        echo -e "${GREEN}Enabling Touch ID for sudo...${NC}"
+        sudo sed -i '' '2i\
+auth       sufficient     pam_tid.so
+' /etc/pam.d/sudo
+        echo -e "${GREEN}Touch ID enabled for sudo authentication!${NC}"
+    else
+        echo -e "${YELLOW}Skipping Touch ID configuration for sudo.${NC}"
+    fi
+else
+    echo -e "${GREEN}Touch ID is already enabled for sudo authentication.${NC}"
+fi
+
 if ! command -v brew &> /dev/null; then
     echo -e "${YELLOW}Homebrew is not installed.${NC}"
     read -p "$(echo -e ${CYAN}Would you like to install it? [Y/n]: ${NC})" install_brew
@@ -48,7 +61,6 @@ if ! command -v brew &> /dev/null; then
         echo -e "${GREEN}Installing Homebrew...${NC}"
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         
-        # Add Homebrew to PATH (assumes Apple Silicon)
         echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.bash_profile
         eval "$(/opt/homebrew/bin/brew shellenv)"
         
@@ -69,7 +81,6 @@ else
     fi
 fi
 
-# Optional: Run brew doctor
 read -p "$(echo -e ${CYAN}Would you like to run brew doctor to check for issues? [Y/n]: ${NC})" run_doctor
 run_doctor=${run_doctor:-Y}  # Default to Y if no input
 if [[ $run_doctor =~ ^[Yy]$ ]]; then
