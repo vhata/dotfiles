@@ -53,9 +53,9 @@ if [ -f ~/.ssh/id_ed25519 ]; then
   copy_from_google_drive=${copy_from_google_drive:-N}
   if [[ ! $copy_from_google_drive =~ ^[Yy]$ ]]; then
     echo -e "${GREEN}Keeping existing SSH keys.${NC}"
-    break
+  else
+    copy_ssh_keys
   fi
-  copy_ssh_keys
 else
   copy_ssh_keys
 fi
