@@ -48,13 +48,18 @@ echo -e "${YELLOW}Installing Google Drive...${NC}"
 brew install --cask google-drive
 echo -e "${GREEN}Google Drive installed successfully.${NC}"
 
-echo -e "${YELLOW}Launching Google Drive. Please log in to access your SSH keys...${NC}"
-open -a "Google Drive"
+# Check if Google Drive is running
+if ! pgrep -x "Google Drive" > /dev/null; then
+  echo -e "${YELLOW}Launching Google Drive. Please log in to continue the setup process...${NC}"
+  open -a "Google Drive"
+  echo -e "${CYAN}After logging in, your files will begin syncing.${NC}"
+fi
 
-echo -e "${CYAN}Please complete the Google Drive login process to access your SSH keys.${NC}"
-echo -e "${CYAN}After logging in, your files will begin syncing.${NC}"
-echo -e "${CYAN}When this is finished, return to this script to continue.${NC}"
-read -p "Press any key to continue..."
+echo -e "${CYAN}When Google Drive is finished syncing, run the following to continue:${NC}"
+
+echo
+echo "   curl -fsSL https://raw.githubusercontent.com/vhata/dotfiles/main/macinit.sh | bash"
+echo
 
 echo -e "${BLUE}============================================${NC}"
 echo -e "${BLUE}       Bootstrap Complete                ${NC}"
