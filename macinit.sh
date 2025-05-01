@@ -162,9 +162,11 @@ DOCKITEMS=(
   "file:///Applications/Slack.app/"
   "file:///Applications/Spotify.app/"
 )
+defaults delete com.apple.dock persistent-apps
 for _item in "${DOCKITEMS[@]}"; do
   defaults write com.apple.dock "persistent-apps" -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>${_item}</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>"
 done
+defaults write com.apple.dock show-process-indicators -bool false
 killall Dock
 
 echo -e "${BLUE}============================================${NC}"
