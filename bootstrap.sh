@@ -56,9 +56,12 @@ if ! pgrep -x "Google Drive" > /dev/null; then
 fi
 
 echo -e "${CYAN}When Google Drive is finished syncing, run the following to continue:${NC}"
-
 echo
-echo "   curl -fsSL https://raw.githubusercontent.com/vhata/dotfiles/main/macinit.sh | bash"
+echo "mkdir -p ~/src"
+echo "cd ~/src"
+echo "git clone https://github.com/vhata/dotfiles.git"
+echo "cd dotfiles"
+echo "bash macinit.sh"
 echo
 
 echo -e "${BLUE}============================================${NC}"
