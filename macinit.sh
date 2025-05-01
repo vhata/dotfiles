@@ -152,7 +152,6 @@ defaults write com.apple.dock "show-recents" -bool false
 DOCKITEMS=(
   "file:///Applications/iTerm.app/"
   "file:///Applications/Bitwarden.app/"
-  "file:///Applications/Authy%20Desktop.app/"
   "file:///Applications/Discord.app/"
   "file:///Applications/Discord%20Canary.app/"
   "file:///Applications/Google%20Chrome.app/"
