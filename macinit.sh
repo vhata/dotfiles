@@ -22,6 +22,10 @@ echo -e "${BLUE}============================================${NC}"
 
 # TODO
 # [ ] Change shell to bash
+# [ ] Completions
+#   [ ] ngrok
+#   [ ] bash
+# [ ] HOMEBREW_NO_ENV_HINTS
 
 echo -e "${GREEN}Updating Homebrew...${NC}"
 brew update
@@ -131,7 +135,7 @@ FORMULAE=(
   fzf
   gh
   git
-  gitstatus
+  #gitstatus
   gnu-sed
   jq
   pyenv
