@@ -93,12 +93,63 @@ install_fonts() {
     echo -e "${GREEN}Fonts installation complete!${NC}"
 }
 
-if brew list --cask bitwarden &>/dev/null 2>&1; then
-    echo -e "${GREEN}Bitwarden already installed.${NC}"
-else
-    echo -e "${YELLOW}Installing Bitwarden...${NC}"
-    brew install --cask bitwarden
-fi
+CASKS=(
+    bitwarden
+caffeine
+cursor
+elgato-stream-deck
+flux
+google-drive
+hammerspoon
+iterm2
+karabiner-elements
+maccy
+messenger
+ngrok
+nordvpn
+nvidia-geforce-now
+obsidian
+signal
+slack
+spotify
+steam
+visual-studio-code
+vivaldi
+vlc
+whatsapp
+)
+FORMULAE=(
+ack
+bash
+bash-completion@2
+brew-cask-completion
+colordiff
+coreutils
+fd
+ffmpeg
+findutils
+fzf
+gh
+git
+gitstatus
+gnu-sed
+jq
+pyenv
+yabai
+yt-dlp
+)
+
+for cask in "${CASKS[@]}"; do
+  brew install --cask "$cask"
+done
+
+for formula in "${FORMULAE[@]}"; do
+  brew install "$formula"
+done
+
+# Decrease size of Dock
+defaults write com.apple.dock tilesize -int 48
+
 
 echo -e "${BLUE}============================================${NC}"
 echo -e "${BLUE}              Setup complete!              ${NC}"
