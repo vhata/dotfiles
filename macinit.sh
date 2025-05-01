@@ -35,17 +35,7 @@ if ! pgrep -x "Google Drive" > /dev/null; then
     exit 1
 fi
 
-# Check if SSH keys already exist
-if [ -f ~/.ssh/id_ed25519 ]; then
-    echo -e "${YELLOW}SSH keys already exist.${NC}"
-    read -p "$(echo -e ${CYAN}Copy from google drive anyway? [y/N]: ${NC})" copy_from_google_drive
-    copy_from_google_drive=${copy_from_google_drive:-N}
-    if [[ ! $copy_from_google_drive =~ ^[Yy]$ ]]; then
-        echo -e "${GREEN}Keeping existing SSH keys.${NC}"
-        break
-    fi
-
-    # Copy SSH keys from Google Drive
+copy_ssh_keys() {
     echo -e "${GREEN}Copying SSH keys from Google Drive...${NC}"
     mkdir -p ~/.ssh
     chmod 700 ~/.ssh
@@ -55,6 +45,19 @@ if [ -f ~/.ssh/id_ed25519 ]; then
         fi
     done
     echo -e "${GREEN}SSH keys copied from Google Drive.${NC}"
+}
+
+if [ -f ~/.ssh/id_ed25519 ]; then
+    echo -e "${YELLOW}SSH keys already exist.${NC}"
+    read -p "$(echo -e ${CYAN}Copy from google drive anyway? [y/N]: ${NC})" copy_from_google_drive
+    copy_from_google_drive=${copy_from_google_drive:-N}
+    if [[ ! $copy_from_google_drive =~ ^[Yy]$ ]]; then
+        echo -e "${GREEN}Keeping existing SSH keys.${NC}"
+        break
+    fi
+    copy_ssh_keys
+else
+    copy_ssh_keys
 fi
 
 # Start the ssh-agent
