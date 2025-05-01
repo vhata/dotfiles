@@ -1,0 +1,73 @@
+#!/bin/bash
+
+. ~/bin/yabai.sh
+
+eval $(get_windows)
+
+place="$1"
+
+if [ -z "$place" ] ; then
+    moncount="$(yabai -m query --displays | jq 'length')"
+    if [ "$moncount" == 3 ] ; then
+        place=home
+    elif [ "$moncount" == 2 ] ; then
+        place=work
+    else
+        place=laptop
+    fi
+fi
+
+case "$place" in
+home)
+    movewin Discord_Canary 5
+    movewin Discord_0 6
+    movewin Spotify 7
+
+    yabai -m space 8 --layout float
+    i=0
+    MSGAPPS=(WhatsApp Messenger Signal Slack)
+    for m in "${MSGAPPS[@]}" ; do
+        movewin "$m" 8
+        gridwin "$m" "4:1:0:${i}:1:1"
+        i=$(($i+1))
+    done
+    ;;
+laptop)
+    movewin Discord_Canary 5
+    movewin Discord_0 6
+    movewin Messenger 6
+    movewin Signal 6
+    movewin Slack 6
+    movewin WhatsApp 6
+    gridwin Discord_Canary "1:1:0:0:1:1"
+    gridwin Discord_0 "8:6:1:0:5:7"
+    gridwin Messenger "8:6:0:2:4:6"
+    gridwin Signal "8:6:0:0:4:6"
+    gridwin Slack "8:6:1:2:4:6"
+    gridwin WhatsApp "8:6:2:2:4:6"
+    ;;
+work)
+    movewin Discord_0 8
+    movewin Discord_Canary 5
+    movewin Messenger 6
+    movewin Signal 6
+    movewin Slack 6
+    movewin WhatsApp 6
+    gridwin Discord_Canary "1:1:0:0:1:1"
+    gridwin Discord_0 "1:1:0:0:1:1"
+    gridwin Signal "8:6:0:0:4:6"
+    gridwin Messenger "8:6:2:0:4:6"
+    gridwin Slack "8:6:0:2:4:6"
+    gridwin WhatsApp "8:6:2:2:4:6"
+    ;;
+test)
+    get_windows
+    ;;
+shell)
+    shift
+    $*
+    ;;
+*)
+    echo "Usage: $0 <location_name>"
+    ;;
+esac

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+STAMP="$(date +'%Y-%m-%d')"
+SAVEFILE=".history/bash_history-$STAMP"
+HOMEDIR=~jonathan.hitchcock
+cp "${HOMEDIR}/.bash_history" "${HOMEDIR}/${SAVEFILE}"
+chown jonathan.hitchcock "${HOMEDIR}/${SAVEFILE}"

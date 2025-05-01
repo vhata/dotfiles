@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+SCRIPTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Define colors
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -25,6 +27,7 @@ echo -e "${BLUE}============================================${NC}"
 #   [ ] ngrok
 #   [ ] bash
 # [ ] HOMEBREW_NO_ENV_HINTS
+# [ ] Save bash history
 
 echo -e "${GREEN}Updating Homebrew...${NC}"
 brew update
@@ -142,6 +145,9 @@ FORMULAE=(
 
 brew install --cask "${CASKS[@]}"
 brew install "${FORMULAE[@]}"
+
+mkdir -p ~/bin
+cp "$SCRIPTDIR/bin/"* ~/bin
 
 # Setup Dock
 defaults write com.apple.dock tilesize -int 48

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+REPOBASE="${HOME}/src/discord"
+if [ "$1" == "-m" ] ; then
+    REV="main"
+    shift
+else
+    REV="$(git -C "$REPOBOASE" rev-parse --abbrev-ref HEAD)"
+fi
+
+GITHUB="https://github.com/discord/discord"
+
+mkurl() {
+    FILEPATH="$(realpath $*)"
+    RELPATH="${FILEPATH#$REPOBASE}"
+    
+    echo "${GITHUB}/blob/${REV}${RELPATH}"
+}
+
+if [ -t 0 ]; then
+    for f in "$@" ; do
+        mkurl "$f"
+    done
+else
+    while read -r line ; do
+        mkurl "$line"
+    done
+fi
