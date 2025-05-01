@@ -49,6 +49,8 @@ copy_ssh_keys() {
     fi
   done
   echo -e "${GREEN}SSH keys copied from Google Drive.${NC}"
+  eval "$(ssh-agent -s)"
+  ssh-add
 }
 
 if [ -f ~/.ssh/id_ed25519 ]; then
@@ -63,10 +65,6 @@ if [ -f ~/.ssh/id_ed25519 ]; then
 else
   copy_ssh_keys
 fi
-
-# Start the ssh-agent
-eval "$(ssh-agent -s)"
-ssh-add
 
 update_macos_preferences() {
   defaults write com.apple.LaunchServices LSQuarantine -bool false
