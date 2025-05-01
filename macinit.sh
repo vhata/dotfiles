@@ -139,21 +139,40 @@ FORMULAE=(
   gnu-sed
   jq
   pyenv
-  yabai
+  # yabai
   yt-dlp
 )
 
-for cask in "${CASKS[@]}"; do
-  brew install --cask "$cask"
-done
+brew install --cask "${CASKS[@]}"
+brew install "${FORMULAE[@]}"
 
-for formula in "${FORMULAE[@]}"; do
-  brew install "$formula"
-done
-
-# Decrease size of Dock
+# Setup Dock
 defaults write com.apple.dock tilesize -int 48
+defaults write com.apple.dock "show-recents" -bool false
+DOCKITEMS=(
+  "file:///Applications/iTerm.app/"
+  "file:///Applications/Bitwarden.app/"
+  "file:///Applications/Authy%20Desktop.app/"
+  "file:///Applications/Discord.app/"
+  "file:///Applications/Discord%20Canary.app/"
+  "file:///Applications/Google%20Chrome.app/"
+  "file:///Applications/Vivaldi.app/"
+  "file:///Applications/Visual%20Studio%20Code.app/"
+  "file:///Applications/Cursor.app/"
+  "file:///Applications/Obsidian.app/"
+  "file:///Applications/Signal.app/"
+  "file:///Applications/Messenger.app/"
+  "file:///Applications/WhatsApp.app/"
+  "file:///Applications/Slack.app/"
+  "file:///Applications/Spotify.app/"
+)
+for _item in "${DOCKITEMS[@]}"; do
+  defaults write com.apple.dock "persistent-apps" -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>${_item}</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>"
+done
+killall Dock
 
 echo -e "${BLUE}============================================${NC}"
 echo -e "${BLUE}              Setup complete!              ${NC}"
 echo -e "${BLUE}============================================${NC}"
+
+# Cleanup
