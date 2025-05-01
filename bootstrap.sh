@@ -45,8 +45,19 @@ if ! command -v brew &>/dev/null; then
 fi
 
 echo -e "${YELLOW}Installing Google Drive...${NC}"
-brew install google-drive
+brew install --cask google-drive
 echo -e "${GREEN}Google Drive installed successfully.${NC}"
 
+echo -e "${YELLOW}Launching Google Drive. Please log in to access your SSH keys...${NC}"
+open -a "Google Drive"
+
+echo -e "${CYAN}Please complete the Google Drive login process to access your SSH keys.${NC}"
+echo -e "${CYAN}After logging in, your files will begin syncing.${NC}"
+echo -e "${CYAN}When this is finished, return to this script to continue.${NC}"
+read -p "Press any key to continue..."
+
+echo -e "${BLUE}============================================${NC}"
+echo -e "${BLUE}       Bootstrap Complete                ${NC}"
+echo -e "${BLUE}============================================${NC}"
 
 
